@@ -14,6 +14,12 @@ class QueryRequest(BaseModel):
     query: str
     top_k: Optional[int] = 5
 
+    
+@app.get("/")
+def root():
+    return {"message": "RAG Talent Search API running!"}
+
+
 @app.post('/ingest')
 async def ingest(req: IngestRequest):
     try:
