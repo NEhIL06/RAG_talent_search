@@ -186,8 +186,8 @@ python src/eval.py
 Full-Stack & AI Engineer | Focused on Agentic AI, Generative Search, and Scalable ML Systems
 
 📍 Bangalore, India  
-📧 your.email@example.com  
-🌐 [GitHub](https://github.com/your-username) • [LinkedIn](https://linkedin.com/in/your-profile)
+📧 chandrakarnehil@gmail.com  
+🌐 [GitHub](https://github.com/NEhiL06) • [LinkedIn](linkedin.com/in/nehil-chandrakar-272410259/) 
 
 ---
 
