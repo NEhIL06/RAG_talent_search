@@ -1,0 +1,33 @@
+services:
+  - type: web
+    name: rag-talent-search
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: ES_HOST
+        value: http://elasticsearch:9200
+      - key: CHROMA_DIR
+        value: /data/chroma
+      - key: ALPHA
+        value: "0.6"
+      - key: GOOGLE_API_KEY
+        sync: false  # Add manually in dashboard for security
+    disk:
+      name: chroma-data
+      mountPath: /data
+      sizeGB: 2
+
+  - type: web
+    name: elasticsearch
+    runtime: docker
+    plan: free
+    dockerCommand: >
+      docker run -p 9200:9200
+      -e discovery.type=single-node
+      docker.elastic.co/elasticsearch/elasticsearch:8.12.2
+    autoDeploy: false
+    envVars:
+      - key: discovery.type
+        value: single-node
