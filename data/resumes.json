@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Asha Mehta",
+    "skills": "Python, TensorFlow, Flask, Machine Learning, APIs",
+    "experience": "2 years",
+    "summary": "Built ML APIs for recommendation systems."
+  },
+  {
+    "name": "Ravi Sharma",
+    "skills": "React, Node.js, Express, MongoDB",
+    "experience": "3 years",
+    "summary": "Fullstack dev focused on scalable services."
+  },
+  {
+    "name": "Pooja Patel",
+    "skills": "PyTorch, NLP, Transformers, Data Engineering",
+    "experience": "4 years",
+    "summary": "NLP engineer with experience in retrieval systems."
+  },
+  {
+    "name": "Sarthak Verma",
+    "skills": "Java, Spring Boot, AWS, Microservices",
+    "experience": "5 years",
+    "summary": "Backend engineer focused on distributed systems."
+  }
+]

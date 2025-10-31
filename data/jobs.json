@@ -1,0 +1,14 @@
+[
+  {
+    "id": "job_1",
+    "title": "AI Engineer",
+    "skills_required": "Python, TensorFlow, APIs, Machine Learning",
+    "description": "Work on model serving, pipelines and ML APIs."
+  },
+  {
+    "id": "job_2",
+    "title": "Fullstack Engineer",
+    "skills_required": "React, Node.js, PostgreSQL, Docker",
+    "description": "Build scalable web platforms."
+  }
+]

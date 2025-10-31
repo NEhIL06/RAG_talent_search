@@ -1,0 +1,12 @@
+fastapi
+uvicorn[standard]
+sentence-transformers
+chromadb
+faiss-cpu
+transformers
+scikit-learn
+pydantic
+python-dotenv
+chromadb
+elasticsearch
+

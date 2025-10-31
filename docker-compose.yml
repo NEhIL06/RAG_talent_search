@@ -1,0 +1,28 @@
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.13.4
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+    volumes:
+      - es_data:/usr/share/elasticsearch/data
+
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - elasticsearch
+    environment:
+      - GOOGLE_API_KEY=AIzaSyD1dwf8nLGt5GlrpcCQjYAUtc9wjXwKO8I
+      - ES_HOST=http://elasticsearch:9200
+    volumes:
+      - ./:/app
+
+volumes:
+  es_data:
