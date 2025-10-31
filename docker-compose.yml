@@ -19,7 +19,7 @@ services:
     depends_on:
       - elasticsearch
     environment:
-      - GOOGLE_API_KEY=AIzaSyD1dwf8nLGt5GlrpcCQjYAUtc9wjXwKO8I
+      - GOOGLE_API_KEY=your_google_api_key_here
       - ES_HOST=http://elasticsearch:9200
     volumes:
       - ./:/app
