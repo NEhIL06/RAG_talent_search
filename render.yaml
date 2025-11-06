@@ -15,7 +15,7 @@ services:
       - key: GOOGLE_API_KEY
         sync: false  # Add manually in dashboard
     startCommand: >
-      python src/index_bm25.py && python src/ingest.py && uvicorn src.main:app --host 0.0.0.0 --port 8080
+      python src/index_bm25.py && python src/ingest.py && uvicorn app.main:app --host 0.0.0.0 --port 8080
 
   - type: web
     name: elasticsearch

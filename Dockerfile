@@ -8,7 +8,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY ./src ./src
 COPY .env .env
-COPY .app .app
+COPY ./app .app
 
 EXPOSE 8080
 
