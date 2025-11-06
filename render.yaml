@@ -7,25 +7,16 @@ services:
     autoDeploy: true
     envVars:
       - key: ES_HOST
-        value: http://elasticsearch:9200
+        value: https://YOUR_ELASTIC_CLOUD_ENDPOINT:9243
+      - key: ES_USERNAME
+        sync: false
+      - key: ES_PASSWORD
+        sync: false
       - key: CHROMA_DIR
-        value: /tmp/chroma   # temporary in-memory storage
+        value: /var/tmp/chroma
       - key: ALPHA
         value: "0.6"
       - key: GOOGLE_API_KEY
         sync: false  # Add manually in dashboard
     startCommand: >
       python src/index_bm25.py && python src/ingest.py && uvicorn app.main:app --host 0.0.0.0 --port 8080
-
-  - type: web
-    name: elasticsearch
-    runtime: docker
-    plan: free
-    dockerCommand: >
-      docker run -p 9200:9200
-      -e discovery.type=single-node
-      docker.elastic.co/elasticsearch/elasticsearch:8.12.2
-    autoDeploy: false
-    envVars:
-      - key: discovery.type
-        value: single-node

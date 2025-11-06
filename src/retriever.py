@@ -6,10 +6,16 @@ import numpy as np, os
 
 class HybridRetriever:
     def __init__(self, chroma_dir='./chroma_store', es_index='resumes', alpha=0.6):
-        self.es = Elasticsearch(os.getenv("ES_HOST", "http://localhost:9200"))
+        es_host = os.getenv("ES_HOST", "http://localhost:9200")
+        es_username = os.getenv("ES_USERNAME")
+        es_password = os.getenv("ES_PASSWORD")
+        if es_username and es_password:
+            self.es = Elasticsearch(es_host, basic_auth=(es_username, es_password))
+        else:
+            self.es = Elasticsearch(es_host)
         self.es_index = es_index
-        self.alpha = alpha
-
+        self.alpha = float(os.getenv("ALPHA", alpha))
+        chroma_dir = os.getenv("CHROMA_DIR", chroma_dir)
         self.client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory=chroma_dir))
         self.embed_model = SentenceTransformer("all-mpnet-base-v2")
         self.collection = self.client.get_collection("resumes")

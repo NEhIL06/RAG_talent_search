@@ -2,10 +2,15 @@ from elasticsearch import Elasticsearch
 import json, os
 
 ES_HOST = os.getenv("ES_HOST", "http://localhost:9200")
+ES_USERNAME = os.getenv("ES_USERNAME")
+ES_PASSWORD = os.getenv("ES_PASSWORD")
 INDEX_NAME = "resumes"
 
 def create_index():
-    es = Elasticsearch(ES_HOST)
+    if ES_USERNAME and ES_PASSWORD:
+        es = Elasticsearch(ES_HOST, basic_auth=(ES_USERNAME, ES_PASSWORD))
+    else:
+        es = Elasticsearch(ES_HOST)
     if es.indices.exists(index=INDEX_NAME):
         es.indices.delete(index=INDEX_NAME)
 
