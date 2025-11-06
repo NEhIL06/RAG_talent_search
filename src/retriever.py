@@ -25,9 +25,10 @@ class HybridRetriever:
         self.es_index = es_index
         self.alpha = float(os.getenv("ALPHA", alpha))
         chroma_dir = os.getenv("CHROMA_DIR", chroma_dir)
-        self.client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory=chroma_dir))
+        self.client = chromadb.PersistentClient(path=chroma_dir)
         self.embed_model = SentenceTransformer("all-mpnet-base-v2")
-        self.collection = self.client.get_collection("resumes")
+        # Ensure collection exists; embedding function was set during ingestion
+        self.collection = self.client.get_or_create_collection("resumes")
 
     def bm25_search(self, query, k=20):
         res = self.es.search(index=self.es_index, size=k, query={"multi_match": {"query": query, "fields": ["skills", "summary", "experience"]}})

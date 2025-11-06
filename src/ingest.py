@@ -1,13 +1,13 @@
 
-import json
+import json, os
 from sentence_transformers import SentenceTransformer
 import chromadb
-from chromadb.config import Settings
 from chromadb.utils import embedding_functions
 
 # Simple ingest script that persists to ChromaDB (duckdb+parquet)
 def main():
-    client = chromadb.Client(Settings(chroma_db_impl="duckdb+parquet", persist_directory="./chroma_store"))
+    chroma_dir = os.getenv("CHROMA_DIR", "./chroma_store")
+    client = chromadb.PersistentClient(path=chroma_dir)
     # Use SentenceTransformer model for embeddings (you can change model name)
     model_name = "all-mpnet-base-v2"
     embed_model = SentenceTransformer(model_name)
@@ -29,8 +29,7 @@ def main():
 
     # Add to chroma collection
     collection.add(documents=docs, metadatas=metadatas, ids=ids)
-    client.persist()
-    print("Ingest complete. Persisted to ./chroma_store")
+    print(f"Ingest complete. Persisted to {chroma_dir}")
 
 
 if __name__ == '__main__':
