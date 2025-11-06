@@ -18,5 +18,4 @@ services:
         value: "0.6"
       - key: GOOGLE_API_KEY
         sync: false  # Add manually in dashboard
-    startCommand: >
-      python src/index_bm25.py && python src/ingest.py && uvicorn app.main:app --host 0.0.0.0 --port 8080
+    # No startCommand for docker runtime; Dockerfile CMD is used
