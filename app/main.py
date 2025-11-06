@@ -15,7 +15,14 @@ class QueryRequest(BaseModel):
     top_k: Optional[int] = 5
 
 
+@app.get('/')
+async def root():
+    return {'message': 'Welcome to the TalentMatch RAG API'}
 
+
+@app.get('/health')
+async def health():
+    return {'status': 'healthy'}
 
 
 @app.post('/ingest')
@@ -30,7 +37,3 @@ async def ingest(req: IngestRequest):
 async def query(req: QueryRequest):
     res = run_query(req.query, top_k=req.top_k)
     return res
-
-@app.get('/health')
-async def health():
-    return {'status': 'healthy'}
