@@ -4,7 +4,8 @@ FROM python:3.11-slim
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1
+RUN pip install --no-cache-dir --prefer-binary --progress-bar off -r requirements.txt
 
 COPY ./src ./src
 COPY ./app ./app

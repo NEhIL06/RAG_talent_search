@@ -1,16 +1,31 @@
 from elasticsearch import Elasticsearch
+from elasticsearch import AuthenticationException
 import json, os
 
 ES_HOST = os.getenv("ES_HOST", "http://localhost:9200")
 ES_USERNAME = os.getenv("ES_USERNAME")
 ES_PASSWORD = os.getenv("ES_PASSWORD")
+ES_API_KEY = os.getenv("ES_API_KEY")  # Optional: base64 "id:api_key" or tuple
 INDEX_NAME = "resumes"
 
-def create_index():
+def _make_client():
+    if ES_API_KEY:
+        api_key_value = ES_API_KEY.strip()
+        if ":" in api_key_value and "\n" not in api_key_value and " " not in api_key_value:
+            api_key_id, api_key_secret = api_key_value.split(":", 1)
+            return Elasticsearch(ES_HOST, api_key=(api_key_id, api_key_secret))
+        return Elasticsearch(ES_HOST, api_key=api_key_value)
     if ES_USERNAME and ES_PASSWORD:
-        es = Elasticsearch(ES_HOST, basic_auth=(ES_USERNAME, ES_PASSWORD))
-    else:
-        es = Elasticsearch(ES_HOST)
+        return Elasticsearch(ES_HOST, basic_auth=(ES_USERNAME, ES_PASSWORD))
+    return Elasticsearch(ES_HOST)
+
+def create_index():
+    es = _make_client()
+    try:
+        # Validate auth early
+        es.info()
+    except AuthenticationException:
+        raise RuntimeError("Elasticsearch auth failed. Set ES_USERNAME/ES_PASSWORD or ES_API_KEY env vars.")
     if es.indices.exists(index=INDEX_NAME):
         es.indices.delete(index=INDEX_NAME)
 

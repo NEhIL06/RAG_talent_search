@@ -12,6 +12,8 @@ services:
         sync: false
       - key: ES_PASSWORD
         sync: false
+      - key: ES_API_KEY
+        sync: false
       - key: CHROMA_DIR
         value: /var/tmp/chroma
       - key: ALPHA

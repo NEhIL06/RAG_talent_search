@@ -1,12 +1,11 @@
-fastapi
-uvicorn[standard]
-sentence-transformers
-chromadb
-faiss-cpu
-transformers
-scikit-learn
-pydantic
-python-dotenv
-chromadb
-elasticsearch
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+sentence-transformers==2.7.0
+chromadb==0.5.4
+faiss-cpu==1.7.4
+transformers==4.43.3
+scikit-learn==1.4.2
+pydantic==2.9.2
+python-dotenv==1.0.1
+elasticsearch==8.13.1
 

@@ -2,6 +2,7 @@ from sentence_transformers import SentenceTransformer
 import chromadb
 from chromadb.config import Settings
 from elasticsearch import Elasticsearch
+from elasticsearch import AuthenticationException
 import numpy as np, os
 
 class HybridRetriever:
@@ -9,7 +10,15 @@ class HybridRetriever:
         es_host = os.getenv("ES_HOST", "http://localhost:9200")
         es_username = os.getenv("ES_USERNAME")
         es_password = os.getenv("ES_PASSWORD")
-        if es_username and es_password:
+        es_api_key = os.getenv("ES_API_KEY")
+        if es_api_key:
+            api_key_value = es_api_key.strip()
+            if ":" in api_key_value and "\n" not in api_key_value and " " not in api_key_value:
+                api_key_id, api_key_secret = api_key_value.split(":", 1)
+                self.es = Elasticsearch(es_host, api_key=(api_key_id, api_key_secret))
+            else:
+                self.es = Elasticsearch(es_host, api_key=api_key_value)
+        elif es_username and es_password:
             self.es = Elasticsearch(es_host, basic_auth=(es_username, es_password))
         else:
             self.es = Elasticsearch(es_host)
