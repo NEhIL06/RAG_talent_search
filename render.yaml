@@ -7,7 +7,7 @@ services:
     autoDeploy: true
     envVars:
       - key: ES_HOST
-        value: https://YOUR_ELASTIC_CLOUD_ENDPOINT:9243
+        value: https://my-elasticsearch-project-b3d414.es.us-central1.gcp.elastic.cloud:443
       - key: ES_USERNAME
         sync: false
       - key: ES_PASSWORD
